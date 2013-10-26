@@ -7,9 +7,12 @@
 
     <link rel="stylesheet" href="css/jquery.mobile.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/jquerymobile/jquery.mobile.js"></script>
+    <script src="lib/gmaps/gmaps.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/map.js"></script>
     <style>
     html, body { padding: 0; margin: 0; }
     html, .ui-mobile, .ui-mobile body {
@@ -34,7 +37,7 @@
         </div>
 
         <div data-role="content">
-            <div style="width:100%; height: 100%; background-color: #333">Google Map</div>
+            <div id="googlemapscontainer"></div>
         </div> 
 
         <!-- defaultpanel  -->
