@@ -10,22 +10,10 @@
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/jquerymobile/jquery.mobile.js"></script>
     <script src="js/main.js"></script>
-    <style>
-    html, body { padding: 0; margin: 0; }
-    html, .ui-mobile, .ui-mobile body {
-        height: 435px;
-    }
-    .ui-mobile, .ui-mobile .ui-page {
-        min-height: 435px;
-    }
-    .ui-content{
-        padding:10px 15px 0px 15px;
-    }
-    .panel-content { padding:15px; }
-    </style>
 </head> 
 
 <body>  
+    <div class="greyLayer" style="display:none"></div>
     <div data-role="page" style="max-height:440px; min-height:440px;" id ="map">
 
         <div data-role="header">
@@ -51,7 +39,7 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stationDetail">
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stationDetail" data-active-station="0">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -61,8 +49,8 @@
         <div data-role="content">
             <div class="stationDetailHeader">
             </div>
-            <h2>Stationname</h2>
-            Owner: <pan clas="playerMoney">{Username}</span>
+            <h2 class="stationName">Stationname</h2>
+            Owner: <span class="ownerName">{Username}</span>
             <br/><br/>
             <a href="#" data-role="button" data-icon="plus">buy Station</a> 
             <a href="#" data-role="button" data-icon="minus">sell Station</a> 
@@ -104,15 +92,8 @@
         </div>
 
         <div data-role="content">
-            <ul data-role="listview">
-                <li><a href="#stationDetail">Station 1</a></li>
-                <li><a href="#stationDetail">Station 2</a></li>
-                <li><a href="#stationDetail">Station 3</a></li>
-                <li><a href="#stationDetail">Station 4</a></li>
-                <li><a href="#stationDetail">Station 5</a></li>
-                <li><a href="#stationDetail">Station 6</a></li>
-                <li><a href="#stationDetail">Station 7</a></li>
-            </ul>
+            <ol data-role="listview" id="stationContent">
+            </ol>
         </div> 
 
         <!-- defaultpanel  -->
@@ -138,22 +119,7 @@
         </div>
 
         <div data-role="content">
-            <ol data-role="listview">
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
-                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
-                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
-                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
-                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+            <ol data-role="listview" id="eventHistoryContent">
             </ol>
         </div> 
 

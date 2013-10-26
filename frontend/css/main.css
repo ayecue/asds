@@ -1,4 +1,16 @@
-.stationDetailHeader{
+
+    html, body { padding: 0; margin: 0; }
+    html, .ui-mobile, .ui-mobile body {
+        height: 435px;
+    }
+    .ui-mobile, .ui-mobile .ui-page {
+        min-height: 435px;
+    }
+    .ui-content{
+        padding:10px 15px 0px 15px;
+    }
+    .panel-content { padding:15px; }
+ .stationDetailHeader{
 	width:100%;
 	height: 250px;
 	display: block;
@@ -7,6 +19,9 @@
   -o-background-size: cover;
   background-size: cover;
   background-position: center center;
+}
+.ownerName{
+	font-weight: bold;
 }
 .upgrades a{
 	color: #666 !important;
@@ -19,4 +34,16 @@
 }
 .plusMonney{
 	color: #0DA800 !important;
+}
+
+.greyLayer{
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	position: fixed;
+	float: left;
+	background-color: #fff;
+	z-index:1337;
+	opacity:0.9;
 }
