@@ -1,0 +1,235 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Page Title</title> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <link rel="stylesheet" href="css/jquery.mobile.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/jquerymobile/jquery.mobile.js"></script>
+    <script src="js/main.js"></script>
+    <style>
+    html, body { padding: 0; margin: 0; }
+    html, .ui-mobile, .ui-mobile body {
+        height: 435px;
+    }
+    .ui-mobile, .ui-mobile .ui-page {
+        min-height: 435px;
+    }
+    .ui-content{
+        padding:10px 15px 0px 15px;
+    }
+    .panel-content { padding:15px; }
+    </style>
+</head> 
+
+<body>  
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="map">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Map</h1>
+        </div>
+
+        <div data-role="content">
+            <div style="width:100%; height: 100%; background-color: #333">Google Map</div>
+        </div> 
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+             <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map" class="ui-btn-active">Map</a></li>
+                <li><a href="#stations">own Stations</a></li>
+                <li><a href="#eventHistory">Event History</a></li>
+                <li><a href="#moneyHistory">Money History</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stationDetail">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Stationinfo</h1>
+        </div>
+
+        <div data-role="content">
+            <div class="stationDetailHeader">
+            </div>
+            <h2>Stationname</h2>
+            Owner: <pan clas="playerMoney">{Username}</span>
+            <br/><br/>
+            <a href="#" data-role="button" data-icon="plus">buy Station</a> 
+            <a href="#" data-role="button" data-icon="minus">sell Station</a> 
+            <br/><br/>
+            <div class="upgrades">
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 1</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 2</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 3</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 4</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 5</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 6</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 7</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 8</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 9</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+            <a class="ui-btn ui-btn-inline ui-shadow ui-btn-corner-all ui-mini ui-btn-icon-bottom ui-btn-up-c" data-theme="c" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-icon="star" data-iconpos="bottom" data-mini="true" data-inline="true"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Upgrade 10</span><span class="ui-icon ui-icon-star ui-icon-shadow">&nbsp;</span></span></a>
+        </div>
+
+        </div> 
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+             <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map">Map</a></li>
+                <li><a href="#stations">own Stations</a></li>
+                <li><a href="#eventHistory">Event History</a></li>
+                <li><a href="#moneyHistory">Money History</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stations">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Stations</h1>
+        </div>
+
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a href="#stationDetail">Station 1</a></li>
+                <li><a href="#stationDetail">Station 2</a></li>
+                <li><a href="#stationDetail">Station 3</a></li>
+                <li><a href="#stationDetail">Station 4</a></li>
+                <li><a href="#stationDetail">Station 5</a></li>
+                <li><a href="#stationDetail">Station 6</a></li>
+                <li><a href="#stationDetail">Station 7</a></li>
+            </ul>
+        </div> 
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+           <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map">Map</a></li>
+                <li><a href="#stations" class="ui-btn-active">own Stations</a></li>
+                <li><a href="#eventHistory">Event History</a></li>
+                <li><a href="#moneyHistory">Money History</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="eventHistory">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Event-History</h1>
+        </div>
+
+        <div data-role="content">
+            <ol data-role="listview">
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
+                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
+                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
+                <li>you finished a quick-Event( u gave a Homelessguy +200$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+                <li>earned a community Card ( u gave a Homelessguy -20$ )</li>
+            </ol>
+        </div> 
+
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+           <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map">Map</a></li>
+                <li><a href="#stations">own Stations</a></li>
+                <li><a href="#eventHistory" class="ui-btn-active">Event History</a></li>
+                <li><a href="#moneyHistory">Money History</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="moneyHistory">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Money-History</h1>
+        </div>
+
+        <div data-role="content">
+            <ol data-role="listview" id="moneyHistoryContent">
+            </ol>
+        </div> 
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+           <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map">Map</a></li>
+                <li><a href="#stations">own Stations</a></li>
+                <li><a href="#eventHistory">Event History</a></li>
+                <li><a href="#moneyHistory" class="ui-btn-active">Money History</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+    <div data-role="page" style="max-height:440px; min-height:440px;" id ="profile">
+
+        <div data-role="header">
+            <a href="#defaultpanel" data-icon="bars">Navigation</a>
+            <h1>Stationary / Profile</h1>
+        </div>
+
+        <div data-role="content">
+            <h2>Playername</h2>
+            Money: <pan clas="playerMoney">{Money}</span><br/>
+            GPS Data: <pan clas="playerGPS">{GPSINFO}</span><br/>
+            Stations: <pan clas="playerStations">{Stations}</span>
+        </div> 
+
+        <!-- defaultpanel  -->
+        <div data-role="panel" id="defaultpanel">
+                
+           <ul data-role="listview" style="border-right: 1px #999 solid">
+                <li><a href="#map">Map</a></li>
+                <li><a href="#stations">own Stations</a></li>
+                <li><a href="#eventHistory">Event History</a></li>
+                <li><a href="#moneyHistory">Money History</a></li>
+                <li><a href="#profile" class="ui-btn-active">Profile</a></li>
+            </ul>
+
+        </div><!-- /content wrapper for padding -->
+                            
+
+    </div>
+</body>
+</html>
+
+

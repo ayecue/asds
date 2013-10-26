@@ -1,0 +1,22 @@
+.stationDetailHeader{
+	width:100%;
+	height: 250px;
+	display: block;
+	background-image: url("../images/stationInfoHeader.jpg");-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+}
+.upgrades a{
+	color: #666 !important;
+}
+.ui-btn-active{
+	color: #fff !important;
+}
+.minusMonney{
+	color: #ff0000 !important;
+}
+.plusMonney{
+	color: #0DA800 !important;
+}

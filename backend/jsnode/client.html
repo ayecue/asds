@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var socketio = io.connect("127.0.0.1:1337");
+
+			socketio.on("triggerEvent", function(data) {
+				document.getElementById("log").innerHTML = ("<hr/>new Event: " + data.eventType + " / " + data.station + " / " + data.message + document.getElementById("log").innerHTML);
+			});
+			socketio.on("reachedCard", function(data) {
+				document.getElementById("log").innerHTML = ("<hr/>new Card: " + data.cardType + " / " + data.message + document.getElementById("log").innerHTML);
+			});
+			socketio.on("dailyMoney", function(data) {
+				document.getElementById("log").innerHTML = ("<hr/>daily money: " + data.MoneyValue  + document.getElementById("log").innerHTML);
+			});
+		</script>
+	</head>
+	<body>
+		<div id="log"></div>
+	</body>
+</html>
