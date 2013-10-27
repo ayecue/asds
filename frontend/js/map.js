@@ -14,7 +14,7 @@ $(document).ready(function(){
 			map : new gClasses.Map(container.get(0),{
 				center : new gClasses.LatLng(52.519171,13.406091),
 				zoom : self._self.maxZoom,
-				mapType : gClasses.MapTypeId.TERRAIN,
+				mapTypeId : self._self.layoutId,
 				streetViewControl : false,
 				mapTypeControl : false
 			}),
@@ -26,17 +26,64 @@ $(document).ready(function(){
 			transitLayer : new gClasses.TransitLayer()
 		});
 
+		self.initLayout();
 		self.initEvents();
 		self.initMap();
 	};
 
 	$.extend(MapController,{
 		minZoom : 16,
-		maxZoom : 14
+		maxZoom : 14,
+		symbolScale : 20,
+		layoutId : 'TRAINLAYOUT'
 	});
 
 	$.extend(MapController.prototype,{
 		_self : MapController,
+		initLayout : function(){
+			var self = this,
+				layout = new gClasses.StyledMapType([
+				    {
+				      stylers: [
+				        { visibility: 'simplified' }
+				      ]
+				    },
+				    {
+				      featureType: 'water',
+				      elementType: 'all',
+				      stylers: [
+				        { hue: '#CCCCCC' },
+				        { weight: 0.2 }
+				      ]
+				    },
+				    {
+				      elementType: 'labels',
+				      stylers: [
+				        	{ visibility: 'off' }
+				      ]
+				    },
+				    {
+						featureType: 'transit.line',
+						elementType: 'geometry',
+						stylers: [
+							{ visibility: 'on' },
+							{ weight: 2.0}
+						]
+					},
+					{
+						featureType: 'transit.station',
+						elementType: 'all',
+						stylers: [
+							{ visibility: 'on' },
+							{ weight : 2.0}
+						]
+					}
+			  	], {
+					name : self._self.layoutId
+				});
+
+			self.map.mapTypes.set(self._self.layoutId, layout);
+		},
 		initEvents : function(){
 			var self = this;
 
@@ -96,8 +143,8 @@ $(document).ready(function(){
 				h2 = self.ui_header.outerHeight();
 
 			self.container.css({
-				height:h1-h2-10,
-				width:w1-30
+				height:h1-h2,
+				width:w1
 			});
 
 			gClasses.event.trigger(self.map, 'resize');
@@ -125,21 +172,25 @@ $(document).ready(function(){
 				},
 				success : function(data){
 					$.each(data,function(_,item){
-						var id = item.id,
-							coords = item.latlong.coordinates,
-							name = item.name,
-							url = item.url;
+						var settings = {
+							id : item.id,
+							lat : item.latlong.coordinates[0],
+							lng : item.latlong.coordinates[1],
+							name : item.name,
+							location_ownership : item.location_ownership,
+							price : item.price
+						};
 
-						self.addStation(id,name,coords[0],coords[1],url);
+						self.addStation(settings);
 					});
 
 					self.drawStations();
 				}
 			});
 		},
-		addStation : function(id,name,lat,lng,url){
+		addStation : function(settings){
 			var self = this,
-				hash = lat + 'x' + lng;
+				hash = settings.lat + 'x' + settings.lng;
 
 			if (hash in self.locationCache) {
 				gClasses.event.removeListener(self.locationCache[hash].clickListener);
@@ -147,11 +198,7 @@ $(document).ready(function(){
 			}
 
 			self.locationCache[hash] = {
-				id : id,
-				name : name,
-				lat : lat,
-				lng : lng,
-				url : url,
+				data : settings,
 				marker : new gClasses.Marker()
 			};
 		},
@@ -159,16 +206,27 @@ $(document).ready(function(){
 			var self = this;
 
 			$.each(self.locationCache,function(_,item){
+				var data = item.data,
+					ownership = data.location_ownership,
+					user = ownership ? ownership.user : null;
+
 				item.marker.setOptions({
-					position : new gClasses.LatLng(item.lat,item.lng),
-					title : item.name,
+					position : new gClasses.LatLng(data.lat,data.lng),
+					title : data.name,
 					visible : true,
-					map : self.map
+					map : self.map,
+					icon : {
+						scale : self._self.symbolScale,
+						path : gClasses.SymbolPath.CIRCLE,
+						fillColor : user ? user.color : '#CCC',
+						fillOpacity : 0.5,
+						strokeWeight : 1
+					}
 				});
 
 				item.clickListener = gClasses.event.addListener(item.marker,'click',function(){
-					self.container.trigger('markerInteraction', [ item ]);
-					//console.log('markerInteraction',item);
+					self.container.trigger('markerInteraction',[item.data]);
+					console.log('markerInteraction',item);
 				});
 			});
 		}
