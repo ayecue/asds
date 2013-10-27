@@ -8,6 +8,8 @@ $(function(){
 	var HostURL = "https://admin.staging.dev.outfittery.de";
 	var activeStation = 0;
 
+	var buyedObjekt;
+
 	// Station Section 
 	function loadStationInformations(id){
 		//$(".greyLayer").fadeIn("fast", function(){
@@ -214,7 +216,7 @@ $(function(){
 
 
 	function updateUserMoney(playerMoney){
-		$(".UserMoney").each(function(){$(this).text(playerMoney);});
+		$(".UserMoney").each( function(){console.log("logme");$(this).text(playerMoney)});
 	}
 
 	function passStation(stationID){
@@ -244,7 +246,6 @@ $(function(){
 	}
 
  	$("#googlemapscontainer").on( "stationpassed", function(event,data ) {
-		
 		passStation(data.id);
 	});
 
@@ -254,7 +255,8 @@ $(function(){
 		$.ajax({
 			url: HostURL+"/locations/"+activeStation+"/buy"
 		}).done(function(data) {
-			updateUserInformation();
+			setTimeout(updateUserInformation, 100);
+			setTimeout(function(){loadStationInformations(activeStation)}, 100);
 		});
 	}
 	updateUserInformation();
