@@ -97,7 +97,7 @@ $(function(){
 						$.each(data, function(index, value) {
 							var preText = "";
 							if(value.action == "ACTION_LOCATION_TAKE_OWNERSHIP"){
-								preText = "buyed ";
+								preText = "bought ";
 							}
 							addHistoryMoney(value.amount,preText+value.transaktionable.name,value.transaktionable.updated_at);
 						}); 
