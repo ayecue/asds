@@ -154,6 +154,7 @@ $(document).ready(function(){
 					scale : self._self.userScale,
 					path : gClasses.SymbolPath.CIRCLE,
 					fillColor : '#ffa900',
+					fillOpacity : 1,
 					strokeWeight : 1
 				}
 			});
@@ -230,6 +231,7 @@ $(document).ready(function(){
 				oldLocation.infoWindow && oldLocation.infoWindow.close();
 				oldLocation.animationDelay && clearTimeout(oldLocation.animationDelay);
 				oldLocation.animationInterval && clearInterval(oldLocation.animationInterval);
+				oldLocation.infoCountdownInterval && clearInterval(oldLocation.infoCountdownInterval);
 				oldLocation.marker.setAnimation(null);
 				oldLocation.marker.setMap(null);
 			}
