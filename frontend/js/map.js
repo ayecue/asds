@@ -31,8 +31,6 @@ $(document).ready(function(){
 		self.initLayout();
 		self.initEvents();
 		self.initMap();
-
-		self.setUserMarker(52.519171,13.406091);
 	};
 
 	$.extend(MapController,{
@@ -194,7 +192,12 @@ $(document).ready(function(){
 			}
 		},
 		setUserMarker : function(lat,lng) {
-			var self = this;
+			var self = this,
+				hash = lat + 'x' + lng;
+
+			if (hash in self.locationCache) {
+				self.container.trigger('stationpassed',[self.locationCache[hash]]);
+			}
 
 			self.userMarker.setOptions({
 				visible : true,
@@ -373,5 +376,39 @@ $(document).ready(function(){
 		}
 	});
 
-	new MapController();
+	var controller = new MapController();
+
+	//Demo
+	controller.container.on('demostart',function(){
+		var todo = [];
+
+		$.each(controller.locationCache,function(_,item){
+			todo.push(item);
+		});
+
+		if (!todo.length) {
+			console.log('test case failed');
+			return;
+		}
+
+		var length = todo.length,
+			index = 0,
+			callback = function(){
+				setTimeout(function(){
+					var item = todo[index];
+
+					controller.setUserMarker(item.data.lat,item.data.lng);
+					controller.map.panTo(new gClasses.LatLng(item.data.lat,item.data.lng));
+
+					index++ < length && callback();
+				},Math.random() * 1000 + 6000);
+			};
+
+		callback();
+		console.log('demo start');
+	});
+
+	setTimeout(function(){
+		controller.container.trigger('demostart');
+	},10000);
 });
