@@ -20,7 +20,7 @@ $(function(){
 					$(".ownerName").text(data.location_ownership.user.name);
 					$("#stationDetail").attr("data-active-station",data.id);
 					$(".stationName").text(data.name);
-					
+
 					if(data.location_ownership.user_id == userID){
 						$('[data-role="button"][data-icon="plus"]').hide();
 						$('[data-role="button"][data-icon="minus"]').show();
@@ -92,7 +92,6 @@ $(function(){
 						url: HostURL+"/transaktions.json",
 						context: document.body
 					}).done(function(data) {
-						//console.log(data);
 						$.each(data, function(index, value) {
 							var preText = "";
 							if(value.action == "ACTION_LOCATION_TAKE_OWNERSHIP"){
@@ -160,7 +159,6 @@ $(function(){
 
 
  	function showStation(data){
- 		console.log(data);
  		$("#stationDetail").attr("data-active-station",data.id);
  		$(".stationName","#stationDetail").text(data.name);
 		$("#popupStationTitle").text(data.name);
@@ -203,12 +201,23 @@ $(function(){
 		showStation(data);
 	});
 
+ 	$("#googlemapscontainer").on( "maploaded", function(event,data ) {
+		$(".greyLayer").fadeOut( 'fast',function(){
+			$.mobile.loading( 'hide' );
+		});
+	});
+
+ 	$("#googlemapscontainer").on( "beforemaploaded", function(event,data ) {
+		$(".greyLayer").show();		
+		$.mobile.loading( 'show' );
+	});
+
+
 	function updateUserMoney(playerMoney){
-		$(".UserMoney").each(function(){$(this).text(playerMoney); console.log("update Money")});
+		$(".UserMoney").each(function(){$(this).text(playerMoney);});
 	}
 
 	function passStation(stationID){
-		console.log("trigger");
 		$.ajax({
 			url: HostURL+"/locations/"+stationID+"/passing",
 			context: document.body
@@ -222,7 +231,6 @@ $(function(){
 			url: HostURL+"/users/me"
 
 			}).done(function(data) {
-				console.log(data.name);
 				userName = data.name;
 				userID = data.id;
 				userMoney = data.wallet.total;
@@ -238,9 +246,8 @@ $(function(){
 		}).done(function(data) {
 			updateUserInformation();
 		});
-		console.log(HostURL+"/locations/"+activeStation+"/buy")
 	}
-
 	updateUserInformation();
+	//triggerPopUp("You was swaged", "A Swagger punshed you hard... you lost 5$","swag it!","images/card.png");
 	//assStation(148);
 });

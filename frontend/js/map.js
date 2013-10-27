@@ -290,6 +290,7 @@ $(document).ready(function(){
 						        seconds = Math.floor(timestamp/ 1) % 60,
 						        string = '';
 
+
 							days > 0 && (string += days + ' days,');
 							hours > 0 && (string += hours + ':');
 							minutes > 0 && (string += minutes + ':');
@@ -298,7 +299,6 @@ $(document).ready(function(){
 							if (seconds < 0) {
 								string = 'Ready';
 							}
-
 						    time.html(' (' + string + ')');
 						};
 
