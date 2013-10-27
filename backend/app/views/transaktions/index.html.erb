@@ -1,0 +1,31 @@
+<h1>Listing transaktions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Wallet</th>
+      <th>Amount</th>
+      <th>Action</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transaktions.each do |transaktion| %>
+      <tr>
+        <td><%= transaktion.wallet %></td>
+        <td><%= transaktion.amount %></td>
+        <td><%= transaktion.action %></td>
+        <td><%= link_to 'Show', transaktion %></td>
+        <td><%= link_to 'Edit', edit_transaktion_path(transaktion) %></td>
+        <td><%= link_to 'Destroy', transaktion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transaktion', new_transaktion_path %>

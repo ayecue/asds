@@ -1,0 +1,37 @@
+<h1>Listing location_passings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Enter point</th>
+      <th>Entered at</th>
+      <th>Exit point</th>
+      <th>Exited at</th>
+      <th>User</th>
+      <th>Location</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @location_passings.each do |location_passing| %>
+      <tr>
+        <td><%= location_passing.enter_point %></td>
+        <td><%= location_passing.entered_at %></td>
+        <td><%= location_passing.exit_point %></td>
+        <td><%= location_passing.exited_at %></td>
+        <td><%= location_passing.user %></td>
+        <td><%= location_passing.location %></td>
+        <td><%= link_to 'Show', location_passing %></td>
+        <td><%= link_to 'Edit', edit_location_passing_path(location_passing) %></td>
+        <td><%= link_to 'Destroy', location_passing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Location passing', new_location_passing_path %>

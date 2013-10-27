@@ -1,0 +1,37 @@
+<%= form_for(@location_ownership) do |f| %>
+  <% if @location_ownership.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@location_ownership.errors.count, "error") %> prohibited this location_ownership from being saved:</h2>
+
+      <ul>
+      <% @location_ownership.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br>
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.datetime_select :start %>
+  </div>
+  <div class="field">
+    <%= f.label :end %><br>
+    <%= f.datetime_select :end %>
+  </div>
+  <div class="field">
+    <%= f.label :prolonged %><br>
+    <%= f.text_field :prolonged %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

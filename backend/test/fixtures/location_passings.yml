@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  enter_point: 
+  entered_at: 2013-10-27 00:36:24
+  exit_point: 
+  exited_at: 2013-10-27 00:36:24
+  user: 
+  location: 
+
+two:
+  enter_point: 
+  entered_at: 2013-10-27 00:36:24
+  exit_point: 
+  exited_at: 2013-10-27 00:36:24
+  user: 
+  location: 
