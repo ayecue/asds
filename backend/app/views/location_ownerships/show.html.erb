@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @location_ownership.location %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @location_ownership.user %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @location_ownership.start %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @location_ownership.end %>
+</p>
+
+<p>
+  <strong>Prolonged:</strong>
+  <%= @location_ownership.prolonged %>
+</p>
+
+<%= link_to 'Edit', edit_location_ownership_path(@location_ownership) %> |
+<%= link_to 'Back', location_ownerships_path %>

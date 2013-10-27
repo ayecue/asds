@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Enter point:</strong>
+  <%= @location_passing.enter_point %>
+</p>
+
+<p>
+  <strong>Entered at:</strong>
+  <%= @location_passing.entered_at %>
+</p>
+
+<p>
+  <strong>Exit point:</strong>
+  <%= @location_passing.exit_point %>
+</p>
+
+<p>
+  <strong>Exited at:</strong>
+  <%= @location_passing.exited_at %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @location_passing.user %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @location_passing.location %>
+</p>
+
+<%= link_to 'Edit', edit_location_passing_path(@location_passing) %> |
+<%= link_to 'Back', location_passings_path %>

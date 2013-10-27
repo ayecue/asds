@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  location_id: 
+  user_id: 
+  start: 2013-10-27 02:21:17
+  end: 2013-10-27 02:21:17
+  prolonged: 
+
+two:
+  location_id: 
+  user_id: 
+  start: 2013-10-27 02:21:17
+  end: 2013-10-27 02:21:17
+  prolonged: 

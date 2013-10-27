@@ -1,0 +1,35 @@
+<h1>Listing location_ownerships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>User</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Prolonged</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @location_ownerships.each do |location_ownership| %>
+      <tr>
+        <td><%= location_ownership.location %></td>
+        <td><%= location_ownership.user %></td>
+        <td><%= location_ownership.start %></td>
+        <td><%= location_ownership.end %></td>
+        <td><%= location_ownership.prolonged %></td>
+        <td><%= link_to 'Show', location_ownership %></td>
+        <td><%= link_to 'Edit', edit_location_ownership_path(location_ownership) %></td>
+        <td><%= link_to 'Destroy', location_ownership, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Location ownership', new_location_ownership_path %>
