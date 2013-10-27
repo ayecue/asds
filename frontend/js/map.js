@@ -152,7 +152,7 @@ $(document).ready(function(){
 			self.map.fitBounds(bounds);
 			self.transitLayer.setMap(self.map);
 
-			if ($.mobile.activePage.attr("id") == "map") {
+			if ($.mobile.activePage && $.mobile.activePage.attr("id") == "map") {
 				self.getStations();
 				self.resize();
 				self.validateZoom();
