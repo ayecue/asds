@@ -48,7 +48,7 @@ $(function(){
 						$("#stationContent").listview('refresh');
 
 						$(".greyLayer").fadeOut( 'fast',function(){
-							$("#stations").attr("data-loaded","true")
+							$("#stations").attr("data-loaded","true");
 							$.mobile.loading( 'hide' );
 						});
 					});
@@ -147,10 +147,37 @@ $(function(){
 		$.mobile.changePage('#newEvent', 'pop', true, true);
 	}
 
-	$("#goo").click(function(){
-		 triggerPopUp("Hey You", "new Event Bitch", "see You", "images/card.png");
-	});
  	$('#stations').bind('pageshow', loadOwnStations );
  	$('#eventHistory').bind('pageshow', loadEventsHistory );
  	$('#moneyHistory').bind('pageshow', loadMoneyHistory );
+
+
+ 	function showStation(data){
+ 		$("#stationDetail").attr("data-active-station",data.id);
+ 		$(".stationName","#stationDetail").text(data.name);
+		$("#popupStationTitle").text(data.name);
+		$("#popupStationPrice").text(1337);
+ 		$('[data-role="button"][data-icon="plus"]').click(showStationBill);
+ 		if(parseInt(1337 > parseInt($(".UserMoney").text())){
+ 			$(".functionBuyStation").addClass("ui-disabled");
+ 		}
+		$.mobile.changePage('#stationDetail', 'pop', true, true);
+ 	}
+	function showStationBill(){
+		$.mobile.changePage('#buyStation', 'pop', true, true);
+	}
+
+	function buyStation(){
+		if(parseInt($("#popupStationPrice").text()) > parseInt($(".UserMoney").text())){
+			// ajax
+		}else{
+
+		}
+
+	}
+	$(".functionBuyStation").click(buyStation);
+
+ 	$("#googlemapscontainer").on( "markerInteraction", function( event, data ) {
+		showStation(data);
+	});
 });

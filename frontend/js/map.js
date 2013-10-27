@@ -117,7 +117,7 @@ $(document).ready(function(){
 				center = self.map.getCenter();
 
 			$.ajax({
-				url : 'https://192.168.2.1:3000/locations.json',
+				url : 'https://admin.staging.dev.outfittery.de/locations.json',
 				dataType : 'json',
 				data : {
 					lat : center.lat(),
@@ -167,8 +167,8 @@ $(document).ready(function(){
 				});
 
 				item.clickListener = gClasses.event.addListener(item.marker,'click',function(){
-					self.container.trigger('markerInteraction',item);
-					console.log('markerInteraction',item);
+					self.container.trigger('markerInteraction', [ item ]);
+					//console.log('markerInteraction',item);
 				});
 			});
 		}
