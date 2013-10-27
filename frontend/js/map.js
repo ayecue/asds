@@ -24,14 +24,13 @@ $(document).ready(function(){
 			),
 			userMarker : new gClasses.Marker(),
 			locationCache : {},
-			transitLayer : new gClasses.TransitLayer()
+			transitLayer : new gClasses.TransitLayer(),
+			page : $('#map')
 		});
 
 		self.initLayout();
 		self.initEvents();
 		self.initMap();
-
-		self.setUserMarker(52.519171,13.406091);
 	};
 
 	$.extend(MapController,{
@@ -41,7 +40,7 @@ $(document).ready(function(){
 		userScale : 5,
 		layoutId : 'TRAINLAYOUT',
 		animationRate : 4000,
-		refreshRate : 100000,
+		refreshRate : 600000,
 		countdownRate : 1000
 	});
 
@@ -95,7 +94,7 @@ $(document).ready(function(){
 			var self = this;
 
 			setInterval(function(){
-				self.getStations();
+				self.activePage && self.getStations();
 			},self._self.refreshRate);
 
 			//Rezise event
@@ -103,9 +102,16 @@ $(document).ready(function(){
 				self.resize();
 			});
 
-			$('#map').bind( "pageshow", function( event ) {
+			self.page.bind( "pageshow", function( event ){
+				self.activePage = true;
+				self.getStations();
 				self.resize();
 				self.validateZoom();
+			});
+
+			self.page.bind( "pagehide", function( event ){
+				self.activePage = false;
+				self.removeAllStations();
 			});
 
 			gClasses.event.addListener(self.map, 'zoom_changed', function(){
@@ -143,9 +149,12 @@ $(document).ready(function(){
 
 			self.map.fitBounds(bounds);
 			self.transitLayer.setMap(self.map);
-			self.validateZoom();
-			self.resize();
-			self.getStations();
+
+			if ($.mobile.activePage && $.mobile.activePage.attr("id") == "map") {
+				self.getStations();
+				self.resize();
+				self.validateZoom();
+			}
 
 			self.userMarker.setOptions({
 				visible : false,
@@ -183,7 +192,12 @@ $(document).ready(function(){
 			}
 		},
 		setUserMarker : function(lat,lng) {
-			var self = this;
+			var self = this,
+				hash = lat + 'x' + lng;
+
+			if (hash in self.locationCache) {
+				self.container.trigger('stationpassed',[self.locationCache[hash]]);
+			}
 
 			self.userMarker.setOptions({
 				visible : true,
@@ -220,6 +234,18 @@ $(document).ready(function(){
 					self.drawStations();
 					self.container.trigger('mapLoaded',[data]);
 				}
+			});
+		},
+		removeAllStations : function(){
+			var self = this;
+
+			$.each(self.locationCache,function(_,item){
+				item.infoWindow && item.infoWindow.close();
+				item.animationDelay && clearTimeout(item.animationDelay);
+				item.animationInterval && clearInterval(item.animationInterval);
+				item.infoCountdownInterval && clearInterval(item.infoCountdownInterval);
+				item.marker.setAnimation(null);
+				item.marker.setMap(null);
 			});
 		},
 		addStation : function(settings){
@@ -350,5 +376,39 @@ $(document).ready(function(){
 		}
 	});
 
-	new MapController();
+	var controller = new MapController();
+
+	//Demo
+	controller.container.on('demostart',function(){
+		var todo = [];
+
+		$.each(controller.locationCache,function(_,item){
+			todo.push(item);
+		});
+
+		if (!todo.length) {
+			console.log('test case failed');
+			return;
+		}
+
+		var length = todo.length,
+			index = 0,
+			callback = function(){
+				setTimeout(function(){
+					var item = todo[index];
+
+					controller.setUserMarker(item.data.lat,item.data.lng);
+					controller.map.panTo(new gClasses.LatLng(item.data.lat,item.data.lng));
+
+					index++ < length && callback();
+				},Math.random() * 1000 + 6000);
+			};
+
+		callback();
+		console.log('demo start');
+	});
+
+	setTimeout(function(){
+		controller.container.trigger('demostart');
+	},10000);
 });
