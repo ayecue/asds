@@ -96,8 +96,8 @@ $(document).ready(function(){
 				h2 = self.ui_header.outerHeight();
 
 			self.container.css({
-				height:h1-h2-10,
-				width:w1-30
+				height:h1-h2,
+				width:w1
 			});
 
 			gClasses.event.trigger(self.map, 'resize');
@@ -117,7 +117,7 @@ $(document).ready(function(){
 				center = self.map.getCenter();
 
 			$.ajax({
-				url : 'https://192.168.2.1:3000/locations.json',
+				url : 'https://admin.staging.dev.outfittery.de/locations.json',
 				dataType : 'json',
 				data : {
 					lat : center.lat(),
