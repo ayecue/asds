@@ -204,14 +204,14 @@ $(function(){
 	});
 
  	$("#googlemapscontainer").on( "mapLoaded", function(event,data ) {
-		$(".greyLayer").fadeOut( 'fast',function(){
-			$.mobile.loading( 'hide' );
-		});
+		//$(".greyLayer").fadeOut( 'fast',function(){
+		//	$.mobile.loading( 'hide' );
+		//});
 	});
 
  	$("#googlemapscontainer").on( "beforeMapLoaded", function(event,data ) {
-		$(".greyLayer").show();		
-		$.mobile.loading( 'show' );
+		//$(".greyLayer").show();		
+		//$.mobile.loading( 'show' );
 	});
 
 
