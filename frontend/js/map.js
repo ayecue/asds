@@ -194,6 +194,8 @@ $(document).ready(function(){
 			var self = this,
 				center = self.map.getCenter();
 
+			self.container.trigger('beforeMapLoaded');
+
 			$.ajax({
 				url : 'https://admin.staging.dev.outfittery.de/locations.json',
 				dataType : 'json',
@@ -216,6 +218,7 @@ $(document).ready(function(){
 					});
 
 					self.drawStations();
+					self.container.trigger('mapLoaded',[data]);
 				}
 			});
 		},
