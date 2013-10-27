@@ -22,6 +22,7 @@ $(document).ready(function(){
 				new gClasses.LatLng(52.33963,13.091166), 
 				new gClasses.LatLng(52.675454,13.761118)
 			),
+			userMarker : new gClasses.Marker(),
 			locationCache : {},
 			transitLayer : new gClasses.TransitLayer()
 		});
@@ -29,13 +30,19 @@ $(document).ready(function(){
 		self.initLayout();
 		self.initEvents();
 		self.initMap();
+
+		self.setUserMarker(52.519171,13.406091);
 	};
 
 	$.extend(MapController,{
 		minZoom : 16,
 		maxZoom : 14,
 		symbolScale : 20,
-		layoutId : 'TRAINLAYOUT'
+		userScale : 5,
+		layoutId : 'TRAINLAYOUT',
+		animationRate : 4000,
+		refreshRate : 100000,
+		countdownRate : 1000
 	});
 
 	$.extend(MapController.prototype,{
@@ -87,6 +94,10 @@ $(document).ready(function(){
 		initEvents : function(){
 			var self = this;
 
+			setInterval(function(){
+				self.getStations();
+			},self._self.refreshRate);
+
 			//Rezise event
 			$(window).resize(function(){
 				self.resize();
@@ -135,6 +146,17 @@ $(document).ready(function(){
 			self.validateZoom();
 			self.resize();
 			self.getStations();
+
+			self.userMarker.setOptions({
+				visible : false,
+				map : self.map,
+				icon : {
+					scale : self._self.userScale,
+					path : gClasses.SymbolPath.CIRCLE,
+					fillColor : '#ffa900',
+					strokeWeight : 1
+				}
+			});
 		},
 		resize : function(){
 			var self = this,
@@ -158,6 +180,14 @@ $(document).ready(function(){
 			} else if (zoom > self._self.minZoom) {
 				self.map.setZoom(self._self.minZoom);
 			}
+		},
+		setUserMarker : function(lat,lng) {
+			var self = this;
+
+			self.userMarker.setOptions({
+				visible : true,
+				position : new gClasses.LatLng(lat,lng)
+			});
 		},
 		getStations : function(){
 			var self = this,
@@ -193,8 +223,15 @@ $(document).ready(function(){
 				hash = settings.lat + 'x' + settings.lng;
 
 			if (hash in self.locationCache) {
-				gClasses.event.removeListener(self.locationCache[hash].clickListener);
-				self.locationCache[hash].marker.setMap(null);
+				var oldLocation = self.locationCache[hash];
+
+				gClasses.event.removeListener(oldLocation.clickListener);
+
+				oldLocation.infoWindow && oldLocation.infoWindow.close();
+				oldLocation.animationDelay && clearTimeout(oldLocation.animationDelay);
+				oldLocation.animationInterval && clearInterval(oldLocation.animationInterval);
+				oldLocation.marker.setAnimation(null);
+				oldLocation.marker.setMap(null);
 			}
 
 			self.locationCache[hash] = {
@@ -208,21 +245,98 @@ $(document).ready(function(){
 			$.each(self.locationCache,function(_,item){
 				var data = item.data,
 					ownership = data.location_ownership,
-					user = ownership ? ownership.user : null;
+					user = ownership ? ownership.user : null,
+					settings = {};
 
-				item.marker.setOptions({
-					position : new gClasses.LatLng(data.lat,data.lng),
-					title : data.name,
-					visible : true,
-					map : self.map,
-					icon : {
-						scale : self._self.symbolScale,
-						path : gClasses.SymbolPath.CIRCLE,
-						fillColor : user ? user.color : '#CCC',
-						fillOpacity : 0.5,
-						strokeWeight : 1
-					}
-				});
+				settings.position = new gClasses.LatLng(data.lat,data.lng);
+				settings.title = data.name;
+				settings.visible = true;
+				settings.map = self.map;
+				settings.icon = {};
+				settings.icon.scale = self._self.symbolScale;
+				settings.icon.path = gClasses.SymbolPath.CIRCLE;
+				settings.icon.fillColor = user ? user.color : '#CCC';
+				settings.icon.fillOpacity = 0.5;
+				settings.icon.strokeWeight = 1;
+
+				item.marker.setOptions(settings);
+
+				if (!user) {
+					item.animationDelay = setTimeout(function(){
+						item.animationDelay = null;
+						item.animationInterval = setInterval(function(){
+							if (item.marker.getAnimation() == null) {
+								item.marker.setAnimation(gClasses.Animation.BOUNCE);
+							} else {
+								item.marker.setAnimation(null);
+							}
+						},self._self.animationRate);
+					},Math.random() * 1000);
+				} else {
+					var node = $('<div />').addClass('mapUserInfo'),
+						infoWrapper = $('<div />'),
+						image = $('<img />'),
+						text = $('<span />'),
+						time = $('<span />'),
+						timeStart = new Date(ownership.start).getTime() / 1000,
+						timeEnd = new Date(ownership.end).getTime() / 1000,
+						timeFn = function(){
+							var timestamp = timeEnd - (new Date().getTime() / 1000),
+								days    = Math.floor(timestamp/ (24 * 60 * 60)),
+						        hours   = Math.floor(timestamp/ (60 * 60)) % 24,
+						        minutes = Math.floor(timestamp/ 60) % 60,
+						        seconds = Math.floor(timestamp/ 1) % 60,
+						        string = '';
+
+							days > 0 && (string += days + ' days,');
+							hours > 0 && (string += hours + ':');
+							minutes > 0 && (string += minutes + ':');
+							string += seconds;
+
+							if (seconds < 0) {
+								string = 'Ready';
+							}
+
+						    time.html(' (' + string + ')');
+						};
+
+					node.css('text-align','center');
+					image.attr('src',user.img_url);
+					image.css('width',16);
+					image.css('height',16);
+					text.html(user.name);
+					timeFn();
+
+					node
+						.append(infoWrapper);
+
+					infoWrapper
+						.append(image)
+						.append(text)
+						.append(time);
+
+					item.infoWindow = new gClasses.InfoWindow({
+						position : new gClasses.LatLng(data.lat,data.lng),
+						content : node.get(0),
+						disableAutoPan : true,
+						maxWidth: 200
+					});
+
+					item.infoCountdownInterval = setInterval(function(){
+						timeFn();
+					},self._self.countdownRate);
+
+					item.infoWindow.open(self.map,item.marker);
+
+					gClasses.event.addListener(item.infoWindow,'domready',function(){
+						var parent = node.parent();
+
+						parent.next().hide();
+						parent.css('top', parent.css('top') + 8);
+						parent.width(parent.width() + 20);
+						image.css('margin-right',5);
+					});
+				}
 
 				item.clickListener = gClasses.event.addListener(item.marker,'click',function(){
 					self.container.trigger('markerInteraction',[item.data]);
