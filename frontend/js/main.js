@@ -201,13 +201,14 @@ $(function(){
 		showStation(data);
 	});
 
- 	$("#googlemapscontainer").on( "maploaded", function(event,data ) {
+ 	$("#googlemapscontainer").on( "mapLoaded", function(event,data ) {
 		$(".greyLayer").fadeOut( 'fast',function(){
 			$.mobile.loading( 'hide' );
+			setTimeout(function(){passStation(35)}, 7000);
 		});
 	});
 
- 	$("#googlemapscontainer").on( "beforemaploaded", function(event,data ) {
+ 	$("#googlemapscontainer").on( "beforeMapLoaded", function(event,data ) {
 		$(".greyLayer").show();		
 		$.mobile.loading( 'show' );
 	});
@@ -222,7 +223,10 @@ $(function(){
 			url: HostURL+"/locations/"+stationID+"/passing",
 			context: document.body
 		}).done(function(data) {
-			updateUserInformation();
+			if(data.status == "charged"){
+				updateUserInformation();
+				triggerPopUp("passed a Station", "You passed a Station and have to pay "+(data.object.amount*-1)+"$","OK!","images/ticket.gif");
+			}
 		});
 	}
 
@@ -248,6 +252,4 @@ $(function(){
 		});
 	}
 	updateUserInformation();
-	//triggerPopUp("You was swaged", "A Swagger punshed you hard... you lost 5$","swag it!","images/card.png");
-	//assStation(148);
 });
