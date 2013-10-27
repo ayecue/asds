@@ -196,7 +196,7 @@ $(document).ready(function(){
 				hash = lat + 'x' + lng;
 
 			if (hash in self.locationCache) {
-				self.container.trigger('stationpassed',[self.locationCache[hash]]);
+				self.container.trigger('stationpassed',[self.locationCache[hash].data]);
 			}
 
 			self.userMarker.setOptions({
@@ -380,11 +380,28 @@ $(document).ready(function(){
 
 	//Demo
 	controller.container.on('demostart',function(){
-		var todo = [];
+		var todo = [
+			[52.492868,13.460249],
+			[52.49616,13.464339],
+			[52.498406,13.467686],
+			[52.502851,13.469093],
+			[52.507602,13.473136],
+			[52.511546,13.475754],
+			[52.513613,13.4753],
+			[52.520164,13.472021],
+			[52.523245,13.468072],
+			[52.524195,13.464884],
+			[52.525151,13.459618],
+			[52.528772,13.455944],
+			[52.533167,13.450992],
+			[52.53656,13.447645],
+			[52.540426,13.439246]
 
-		$.each(controller.locationCache,function(_,item){
-			todo.push(item);
-		});
+		];
+
+		//$.each(controller.locationCache,function(_,item){
+		//	todo.push(item);
+		//});
 
 		if (!todo.length) {
 			console.log('test case failed');
@@ -397,11 +414,11 @@ $(document).ready(function(){
 				setTimeout(function(){
 					var item = todo[index];
 
-					controller.setUserMarker(item.data.lat,item.data.lng);
-					controller.map.panTo(new gClasses.LatLng(item.data.lat,item.data.lng));
+					controller.setUserMarker(item[0],item[1]);
+					controller.map.panTo(new gClasses.LatLng(item[0],item[1]));
 
 					index++ < length && callback();
-				},Math.random() * 1000 + 6000);
+				},Math.random() * 1000 + 2000);
 			};
 
 		callback();

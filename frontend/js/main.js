@@ -204,7 +204,6 @@ $(function(){
  	$("#googlemapscontainer").on( "mapLoaded", function(event,data ) {
 		$(".greyLayer").fadeOut( 'fast',function(){
 			$.mobile.loading( 'hide' );
-			setTimeout(function(){passStation(35)}, 7000);
 		});
 	});
 
@@ -243,6 +242,13 @@ $(function(){
 		});
 
 	}
+
+ 	$("#googlemapscontainer").on( "stationpassed", function(event,data ) {
+		
+		passStation(data.id);
+	});
+
+
 
 	function buyStation(){
 		$.ajax({
