@@ -24,7 +24,8 @@ $(document).ready(function(){
 			),
 			userMarker : new gClasses.Marker(),
 			locationCache : {},
-			transitLayer : new gClasses.TransitLayer()
+			transitLayer : new gClasses.TransitLayer(),
+			page : $('#map')
 		});
 
 		self.initLayout();
@@ -41,7 +42,7 @@ $(document).ready(function(){
 		userScale : 5,
 		layoutId : 'TRAINLAYOUT',
 		animationRate : 4000,
-		refreshRate : 100000,
+		refreshRate : 600000,
 		countdownRate : 1000
 	});
 
@@ -95,7 +96,7 @@ $(document).ready(function(){
 			var self = this;
 
 			setInterval(function(){
-				self.getStations();
+				self.activePage && self.getStations();
 			},self._self.refreshRate);
 
 			//Rezise event
@@ -103,9 +104,16 @@ $(document).ready(function(){
 				self.resize();
 			});
 
-			$('#map').bind( "pageshow", function( event ) {
+			self.page.bind( "pageshow", function( event ){
+				self.activePage = true;
+				self.getStations();
 				self.resize();
 				self.validateZoom();
+			});
+
+			self.page.bind( "pagehide", function( event ){
+				self.activePage = false;
+				self.removeAllStations();
 			});
 
 			gClasses.event.addListener(self.map, 'zoom_changed', function(){
@@ -143,9 +151,12 @@ $(document).ready(function(){
 
 			self.map.fitBounds(bounds);
 			self.transitLayer.setMap(self.map);
-			self.validateZoom();
-			self.resize();
-			self.getStations();
+
+			if ($.mobile.activePage.attr("id") == "map") {
+				self.getStations();
+				self.resize();
+				self.validateZoom();
+			}
 
 			self.userMarker.setOptions({
 				visible : false,
@@ -220,6 +231,18 @@ $(document).ready(function(){
 					self.drawStations();
 					self.container.trigger('mapLoaded',[data]);
 				}
+			});
+		},
+		removeAllStations : function(){
+			var self = this;
+
+			$.each(self.locationCache,function(_,item){
+				item.infoWindow && item.infoWindow.close();
+				item.animationDelay && clearTimeout(item.animationDelay);
+				item.animationInterval && clearInterval(item.animationInterval);
+				item.infoCountdownInterval && clearInterval(item.infoCountdownInterval);
+				item.marker.setAnimation(null);
+				item.marker.setMap(null);
 			});
 		},
 		addStation : function(settings){
