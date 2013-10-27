@@ -63,3 +63,34 @@
 	z-index:1337;
 	opacity:0.9;
 }
+
+.custom-money-col-a{
+	text-align:right; 
+	width:12% !important;
+}
+.custom-money-col-b{
+	text-align:left;
+	width:63% !important;
+	padding-left: 5px !important;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+}
+.custom-money-col-c{
+	text-align:right;
+	width:25% !important;	
+}
+
+.custom-event-col-a{
+	text-align:left;
+	width:75% !important;
+	padding-left: 5px !important;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+}
+.custom-event-col-b{
+	text-align:right;
+	width:25% !important;	
+}
+div[data-role=page]{
+	min-width: 380px !important;
+}

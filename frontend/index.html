@@ -14,7 +14,7 @@
 
 <body>  
     <div class="greyLayer" style="display:none"></div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="map">
+    <div data-role="page" id ="map">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -22,7 +22,7 @@
         </div>
 
         <div data-role="content">
-            <div style="width:100%; height: 100%; background-color: #333">Google Map</div>
+            <div style="width:100%; height: 100%; background-color: #333" id="goo">Google Map</div>
         </div> 
 
         <!-- defaultpanel  -->
@@ -39,7 +39,18 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stationDetail" data-active-station="0">
+     <div data-role="dialog" id="newEvent">
+
+        <div data-role="content">
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="text-align:center"><img src="images/card.png" style="100%" /></div>
+                <div class="ui-block-b"><h2 id="popupTitle"></h2><span id="popupContent"></span></div>
+            </div><!-- /grid-a -->
+             <a href="#" data-rel="back" data-role="button" id="popupButton">place</a> 
+        </div>                            
+
+    </div>
+    <div data-role="page" id ="stationDetail" data-active-station="0">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -48,11 +59,6 @@
 
         <div data-role="content">
             <div class="stationDetailHeader">
-            </div>
-            <div class="stationDetailProgress">
-                <div class="stationDetailFill">
-                    70%
-                </div>
             </div>
             <h2 class="stationName">Stationname</h2>
             Owner: <span class="ownerName">{Username}</span>
@@ -89,7 +95,7 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="stations" data-loaded="false">
+    <div data-role="page" id ="stations" data-loaded="false">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -116,7 +122,7 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="eventHistory" data-loaded="false">
+    <div data-role="page" id ="eventHistory" data-loaded="false">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -124,8 +130,8 @@
         </div>
 
         <div data-role="content">
-            <ol data-role="listview" id="eventHistoryContent">
-            </ol>
+            <ul data-role="listview" id="eventHistoryContent">
+            </ul>
         </div> 
 
 
@@ -144,7 +150,7 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="moneyHistory" data-loaded="false">
+    <div data-role="page" id ="moneyHistory"  data-loaded="false">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -152,8 +158,8 @@
         </div>
 
         <div data-role="content">
-            <ol data-role="listview" id="moneyHistoryContent">
-            </ol>
+            <ul data-role="listview" id="moneyHistoryContent">
+            </ul>
         </div> 
 
         <!-- defaultpanel  -->
@@ -171,7 +177,7 @@
                             
 
     </div>
-    <div data-role="page" style="max-height:440px; min-height:440px;" id ="profile">
+    <div data-role="page" id ="profile">
 
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
@@ -179,7 +185,7 @@
         </div>
 
         <div data-role="content">
-            <h2>Playername</h2>
+            <h2 class="playerName">Playername</h2>
             Money: <pan clas="playerMoney">{Money}</span><br/>
             GPS Data: <pan clas="playerGPS">{GPSINFO}</span><br/>
             Stations: <pan clas="playerStations">{Stations}</span>

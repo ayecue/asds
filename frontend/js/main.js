@@ -5,7 +5,8 @@ $(function(){
 
 	// Station Section 
 	function loadStationInformations(id){
-		$(".greyLayer").fadeIn("fast", function(){
+		//$(".greyLayer").fadeIn("fast", function(){
+		$(".greyLayer").show();		
 				$.mobile.loading( 'show' );
 				$.ajax({
 					url: "station.json",
@@ -28,12 +29,13 @@ $(function(){
 					});
 				});
 
-		});
+		//});
 	}
 
 	function loadOwnStations(){
 		if($("#stations").attr("data-loaded") == "false"){
-			$(".greyLayer").fadeIn("fast", function(){
+		//$(".greyLayer").fadeIn("fast", function(){
+		$(".greyLayer").show();		
 					$.mobile.loading( 'show' );
 					$.ajax({
 						url: "ownStation.json",
@@ -51,7 +53,7 @@ $(function(){
 						});
 					});
 
-			});
+		//	});
 		}
 	}
 
@@ -69,21 +71,49 @@ $(function(){
 		} else {
 			classMoney = "plusMonney";
 		}
-		var liObjekt = '<li><span class="'+classMoney+'">'+value+' </span> '+Comment+' | '+transferDate+'</li>';
+		var liObjekt = '<li><div class="ui-grid-b"><div class="'+classMoney+' ui-block-a custom-money-col-a">'+value+' $</div><div class="ui-block-b custom-money-col-b">'+Comment+'</div><div class="ui-block-c custom-money-col-c">'+transferDate+'</div></div></li>';
 
-		$("#moneyHistoryContent").append(liObjekt);
+		$("#moneyHistoryContent").prepend(liObjekt);
+	}
+
+	function loadMoneyHistory(){
+		if($("#moneyHistory").attr("data-loaded") == "false"){
+			//$(".greyLayer").fadeIn("fast", function(){
+			
+			$(".greyLayer").show();		
+					$.mobile.loading( 'show' );
+					$.ajax({
+						url: "moneyHistory.json",
+						context: document.body
+					}).done(function(data) {
+
+						$.each(data, function(index, value) {
+							addHistoryMoney(value[0].value,value[0].comment,value[0].transferDate);
+						}); 
+						$("#moneyHistoryContent").listview('refresh');
+
+						$(".greyLayer").fadeOut( 'fast',function(){
+							$("#moneyHistory").attr("data-loaded","true")
+							$.mobile.loading( 'hide' );
+						});
+					});
+
+		//	});
+		}
 	}
 
 	// Event Hitory
 	function addHistoryEvent(Comment, transferDate){
-		var liObjekt = '<li>'+Comment+' | '+transferDate+'</li>';
+		var liObjekt = '<li><div class="ui-grid-b"><div class="ui-block-a custom-event-col-a">'+Comment+'</div><div class="ui-block-b custom-event-col-b">'+transferDate+'</div></div></li>';
 
 		$("#eventHistoryContent").prepend(liObjekt);
 	}
 
-	function loadEvents(){
+	function loadEventsHistory(){
 		if($("#eventHistory").attr("data-loaded") == "false"){
-			$(".greyLayer").fadeIn("fast", function(){
+			//$(".greyLayer").fadeIn("fast", function(){
+
+			$(".greyLayer").show();		
 					$.mobile.loading( 'show' );
 					$.ajax({
 						url: "events.json",
@@ -101,10 +131,26 @@ $(function(){
 						});
 					});
 
-			});
+			//});
 		}
 	}
 
+	function triggerPopUp(title, content, buttonText, image){
+		$("#popupTitle").text(title);
+		$("#popupContent").text(content);
+		if($(".ui-btn-text","#popupButton").length > 0){
+			$(".ui-btn-text","#popupButton").text(buttonText);
+		}else {
+			$("#popupButton").text(buttonText);
+		}
+		$("#popupImage").attr("src", image);
+		$.mobile.changePage('#newEvent', 'pop', true, true);
+	}
+
+	$("#goo").click(function(){
+		 triggerPopUp("Hey You", "new Event Bitch", "see You", "images/card.png");
+	});
  	$('#stations').bind('pageshow', loadOwnStations );
- 	$('#eventHistory').bind('pageshow', loadEvents );
+ 	$('#eventHistory').bind('pageshow', loadEventsHistory );
+ 	$('#moneyHistory').bind('pageshow', loadMoneyHistory );
 });
