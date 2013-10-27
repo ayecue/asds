@@ -1,26 +1,33 @@
 $(function(){
 
 	// Public Informations
-	var userName = "swagger"
+	var userName = "";
+	var userMoney = 0;
+	var userID = 0;
+
+	var HostURL = "https://admin.staging.dev.outfittery.de";
+	var activeStation = 0;
 
 	// Station Section 
 	function loadStationInformations(id){
 		//$(".greyLayer").fadeIn("fast", function(){
 		$(".greyLayer").show();		
+		console.log(HostURL+"/ĺocations/"+id+".json");
 				$.mobile.loading( 'show' );
 				$.ajax({
-					url: "station.json",
-					context: document.body
+					url: HostURL+"/locations/"+id+".json"
 				}).done(function(data) {
-					$(".ownerName").text(data.owner);
+					$(".ownerName").text(data.location_ownership.user.name);
 					$("#stationDetail").attr("data-active-station",data.id);
 					$(".stationName").text(data.name);
-
-					if(data.owner == userName){
+					
+					if(data.location_ownership.user_id == userID){
 						$('[data-role="button"][data-icon="plus"]').hide();
+						$('[data-role="button"][data-icon="minus"]').show();
 						$(".ownerName").text("you are the Owner");
 					} else {
 						$('[data-role="button"][data-icon="minus"]').hide();
+						$('[data-role="button"][data-icon="plus"]').show();
 					}
 
 					$.mobile.changePage('#stationDetail', 'pop', true, true);
@@ -38,12 +45,11 @@ $(function(){
 		$(".greyLayer").show();		
 					$.mobile.loading( 'show' );
 					$.ajax({
-						url: "ownStation.json",
+						url: HostURL+"/users/"+userID+"/locations.json",
 						context: document.body
 					}).done(function(data) {
-
 						$.each(data, function(index, value) {
-							addOwnStation(value[0].id, value[0].name);
+							addOwnStation(value.id, value.name);
 						}); 
 						$("#stationContent").listview('refresh');
 
@@ -83,13 +89,18 @@ $(function(){
 			$(".greyLayer").show();		
 					$.mobile.loading( 'show' );
 					$.ajax({
-						url: "moneyHistory.json",
+						url: HostURL+"/transaktions.json",
 						context: document.body
 					}).done(function(data) {
-
+						//console.log(data);
 						$.each(data, function(index, value) {
-							addHistoryMoney(value[0].value,value[0].comment,value[0].transferDate);
+							var preText = "";
+							if(value.action == "ACTION_LOCATION_TAKE_OWNERSHIP"){
+								preText = "buyed ";
+							}
+							addHistoryMoney(value.amount,preText+value.transaktionable.name,value.transaktionable.updated_at);
 						}); 
+
 						$("#moneyHistoryContent").listview('refresh');
 
 						$(".greyLayer").fadeOut( 'fast',function(){
@@ -105,13 +116,11 @@ $(function(){
 	// Event Hitory
 	function addHistoryEvent(Comment, transferDate){
 		var liObjekt = '<li><div class="ui-grid-b"><div class="ui-block-a custom-event-col-a">'+Comment+'</div><div class="ui-block-b custom-event-col-b">'+transferDate+'</div></div></li>';
-
 		$("#eventHistoryContent").prepend(liObjekt);
 	}
 
 	function loadEventsHistory(){
 		if($("#eventHistory").attr("data-loaded") == "false"){
-			//$(".greyLayer").fadeIn("fast", function(){
 
 			$(".greyLayer").show();		
 					$.mobile.loading( 'show' );
@@ -130,8 +139,6 @@ $(function(){
 							$.mobile.loading( 'hide' );
 						});
 					});
-
-			//});
 		}
 	}
 
@@ -153,31 +160,87 @@ $(function(){
 
 
  	function showStation(data){
+ 		console.log(data);
  		$("#stationDetail").attr("data-active-station",data.id);
  		$(".stationName","#stationDetail").text(data.name);
 		$("#popupStationTitle").text(data.name);
-		$("#popupStationPrice").text(1337);
+
+		if(data.location_ownership != null){
+			if(data.location_ownership.user.id == userID){
+				$('[data-role="button"][data-icon="plus"]').hide();
+				$('[data-role="button"][data-icon="minus"]').show();
+				$(".ownerName").text("you are the Owner");
+			} else {
+				$('[data-role="button"][data-icon="minus"]').hide();
+				$('[data-role="button"][data-icon="plus"]').hide();
+				$(".ownerName").html(data.location_ownership.user.name);
+			}
+		}else{
+			$(".ownerName").html("City");
+			$('[data-role="button"][data-icon="minus"]').hide();
+			$('[data-role="button"][data-icon="plus"]').show();
+		}
+
+		$("#popupStationPrice").text(data.price);
+		$('[data-role="button"][data-icon="plus"]').unbind( "click" );
  		$('[data-role="button"][data-icon="plus"]').click(showStationBill);
- 		if(parseInt(1337 > parseInt($(".UserMoney").text())){
- 			$(".functionBuyStation").addClass("ui-disabled");
+ 		$("#buyButton").addClass("ui-disabled");
+
+ 		if(data.price < userMoney){
+ 			$("#buyButton").removeClass("ui-disabled");
+ 			activeStation = data.id;
+ 			$("#buyButton").click(buyStation);
  		}
+
 		$.mobile.changePage('#stationDetail', 'pop', true, true);
  	}
+
 	function showStationBill(){
 		$.mobile.changePage('#buyStation', 'pop', true, true);
 	}
 
-	function buyStation(){
-		if(parseInt($("#popupStationPrice").text()) > parseInt($(".UserMoney").text())){
-			// ajax
-		}else{
-
-		}
-
-	}
-	$(".functionBuyStation").click(buyStation);
-
- 	$("#googlemapscontainer").on( "markerInteraction", function( event, data ) {
+ 	$("#googlemapscontainer").on( "markerInteraction", function(event,data ) {
 		showStation(data);
 	});
+
+	function updateUserMoney(playerMoney){
+		$(".UserMoney").each(function(){$(this).text(playerMoney); console.log("update Money")});
+	}
+
+	function passStation(stationID){
+		console.log("trigger");
+		$.ajax({
+			url: HostURL+"/locations/"+stationID+"/passing",
+			context: document.body
+		}).done(function(data) {
+			updateUserInformation();
+		});
+	}
+
+	function updateUserInformation(){
+		$.ajax({
+			url: HostURL+"/users/me"
+
+			}).done(function(data) {
+				console.log(data.name);
+				userName = data.name;
+				userID = data.id;
+				userMoney = data.wallet.total;
+				updateUserMoney(userMoney);
+				$(".playerName").html(userName);
+		});
+
+	}
+
+	function buyStation(){
+		$.ajax({
+			url: HostURL+"/locations/"+activeStation+"/buy"
+		}).done(function(data) {
+			updateUserInformation();
+		});
+		console.log(HostURL+"/locations/"+activeStation+"/buy")
+	}
+
+	updateUserInformation();
+	//assStation(148);
 });

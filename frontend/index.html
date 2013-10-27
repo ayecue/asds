@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/jquerymobile/jquery.mobile.js"></script>
@@ -27,7 +27,7 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Map</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <span class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</span>
         </div>
 
         <div data-role="content" style="padding:0px;">
@@ -63,8 +63,8 @@
 
         <div data-role="content">
               <h2 id="popupStationTitle"></h2>Do you wanna buy this staion for <span id="popupStationPrice" style="font-weight:bold"></span>$ ?<br/>
-             Yor Money: <span class="UserMoney" style="font-weight:bold">123</span>
-             <a href="#" data-rel="back" data-role="button" class="functionBuyStation">buy</a> 
+             Yor Money: <span style="font-weight:bold"><span class="UserMoney">{MONEY}</span>$</span>
+             <a href="#" data-rel="back" data-role="button" id="buyButton">buy</a> 
              <a href="#" data-rel="back" data-role="button">abort</a> 
         </div>   
 
@@ -75,7 +75,7 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Stationinfo</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <div class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</div>
         </div>
 
         <div data-role="content">
@@ -121,7 +121,7 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Stations</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <div class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</div>
         </div>
 
         <div data-role="content">
@@ -149,7 +149,7 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Event-History</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <div class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</div>
         </div>
 
         <div data-role="content">
@@ -178,7 +178,7 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Money-History</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <div class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</div>
         </div>
 
         <div data-role="content">
@@ -206,14 +206,12 @@
         <div data-role="header">
             <a href="#defaultpanel" data-icon="bars">Navigation</a>
             <h1>Stationary / Profile</h1>
-            <div class="ui-btn-right" style="margin:7px" class="UserMoney">{MONEY}</div>
+            <div class="ui-btn-right" style="margin:7px"><span class="UserMoney">{MONEY}</span>$</div>
         </div>
 
         <div data-role="content">
             <h2 class="playerName">Playername</h2>
-            Money: <pan clas="playerMoney">{Money}</span><br/>
-            GPS Data: <pan clas="playerGPS">{GPSINFO}</span><br/>
-            Stations: <pan clas="UserMoney">{Money}</span>
+            Money: <span class="UserMoney">{MONEY}</span>$<br/>
         </div> 
 
         <!-- defaultpanel  -->

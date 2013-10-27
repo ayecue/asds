@@ -3,14 +3,16 @@
         {
             "name": "Ostkreutz",
             "id": 12,
-            "owner": "swagger"
+            "owner": "swagger",
+            "userID": 2600
         }
     ],
     "1": [
         {
             "name": "Westkreutz",
             "id": 9,
-            "owner": "swagger"
+            "owner": "swagger",
+            "userID": 2600
         }
     ]
 }

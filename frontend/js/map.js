@@ -226,7 +226,6 @@ $(document).ready(function(){
 
 				item.clickListener = gClasses.event.addListener(item.marker,'click',function(){
 					self.container.trigger('markerInteraction',[item.data]);
-					console.log('markerInteraction',item);
 				});
 			});
 		}
